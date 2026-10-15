@@ -1,0 +1,147 @@
+
+import { useEffect, useState } from "react";
+import "./App.css";
+
+import Sidebar from "./components/Sidebar";
+import DashboardHeader from "./components/DashboardHeader";
+import StatsGrid from "./components/StatsGrid";
+import JobForm from "./components/JobForm";
+import JobTable from "./components/JobTable";
+
+const STORAGE_KEY = "jobTrackerJobs";
+
+const initialJobs = [
+  {
+    id: 1,
+    title: "Frontend Developer",
+    company: "BrightTech",
+    status: "Applied",
+    date: "2026-10-08",
+  },
+  {
+    id: 2,
+    title: "Junior Software Engineer",
+    company: "Nova Systems",
+    status: "Saved",
+    date: "2026-10-09",
+  },
+  {
+    id: 3,
+    title: "React Developer",
+    company: "CloudWorks",
+    status: "Interview",
+    date: "2026-10-12",
+  },
+];
+
+function loadJobs() {
+  try {
+    const savedJobs = localStorage.getItem(STORAGE_KEY);
+
+    if (savedJobs !== null) {
+      const parsedJobs = JSON.parse(savedJobs);
+
+      if (Array.isArray(parsedJobs)) {
+        return parsedJobs;
+      }
+    }
+  } catch (error) {
+    console.error("Could not load saved jobs:", error);
+  }
+
+  return initialJobs;
+}
+
+function App() {
+  const [jobs, setJobs] = useState(loadJobs);
+  const [showForm, setShowForm] = useState(false);
+  const [selectedJob, setSelectedJob] = useState(null);
+
+  // Save jobs whenever the jobs state changes.
+  useEffect(() => {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(jobs));
+    } catch (error) {
+      console.error("Could not save jobs:", error);
+    }
+  }, [jobs]);
+
+  function handleAddClick() {
+    setSelectedJob(null);
+    setShowForm((previous) => !previous);
+  }
+
+  function handleEditJob(job) {
+    setSelectedJob(job);
+    setShowForm(true);
+  }
+
+  function handleSaveJob(savedJob) {
+    if (selectedJob) {
+      setJobs((previousJobs) =>
+        previousJobs.map((job) =>
+          job.id === savedJob.id ? savedJob : job
+        )
+      );
+    } else {
+      setJobs((previousJobs) => [savedJob, ...previousJobs]);
+    }
+
+    setSelectedJob(null);
+    setShowForm(false);
+  }
+
+  function handleDeleteJob(jobId) {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this opportunity?"
+    );
+
+    if (!confirmed) return;
+
+    setJobs((previousJobs) =>
+      previousJobs.filter((job) => job.id !== jobId)
+    );
+
+    if (selectedJob?.id === jobId) {
+      setSelectedJob(null);
+      setShowForm(false);
+    }
+  }
+
+  function handleCancelForm() {
+    setSelectedJob(null);
+    setShowForm(false);
+  }
+
+  return (
+    <div className="app">
+      <Sidebar />
+
+      <main className="main-content" id="dashboard">
+        <DashboardHeader
+          showForm={showForm}
+          onAddClick={handleAddClick}
+        />
+
+        {showForm && (
+          <JobForm
+            key={selectedJob?.id ?? "new"}
+            initialJob={selectedJob}
+            onSave={handleSaveJob}
+            onCancel={handleCancelForm}
+          />
+        )}
+
+        <StatsGrid jobs={jobs} />
+
+        <JobTable
+          jobs={jobs}
+          onEditJob={handleEditJob}
+          onDeleteJob={handleDeleteJob}
+        />
+      </main>
+    </div>
+  );
+}
+
+export default App;

@@ -47,7 +47,8 @@ Install Node.js and npm, and make sure Git is available.
 2. Open the project directory:
 
    ```bash
-   cd opportunity-track
+            
+           cd Job-tracker
    ```
 
 3. Install dependencies:
@@ -69,7 +70,7 @@ Install Node.js and npm, and make sure Git is available.
 ## Project Structure
 
 ```text
-opportunity-track/
+Job-Tracker/
 ├── public/
 ├── src/
 │   ├── components/
@@ -100,7 +101,7 @@ opportunity-track/
 
 ## Data Storage and Limitations
 
-OpportunityTrack currently stores job records in the browser's local storage.
+ Job Tracker currently stores job records in the browser's local storage.
 
 - Records persist across page refreshes in the same browser.
 - Data is not automatically synchronized between devices or browsers.
@@ -114,7 +115,7 @@ Project screenshots are available in the repository. Add their relative paths he
 Example:
 
 ```markdown
-![OpportunityTrack dashboard](./screenshots/dashboard.png)
+![ Job Tracker dashboard](./screenshots/dashboard.png)
 ```
 
 ## Project Goals
@@ -157,4 +158,4 @@ This project demonstrates practical frontend development skills, including:
 
 ## License
 
-This project is currently a learning project. Add a license if you intend to distribute or reuse it publicly.# job-tracker
+This project is currently a learning project. Add a license if you intend to distribute or reuse it publicly.
