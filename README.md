@@ -145,8 +145,8 @@ This project demonstrates practical frontend development skills, including:
 
 ## Links
 
-- **GitHub Repository:** YOUR_GITHUB_REPOSITORY_URL
-- **Live Demo:** Add your deployed application URL here
+- **GitHub Repository:**(https://github.com/codepro233/job-tracker)
+- **Live Demo:** (https://job-tracker-gilt-seven.vercel.app/)
 
 ## Future Improvements
 
