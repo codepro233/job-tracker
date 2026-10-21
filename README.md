@@ -206,15 +206,14 @@ This project demonstrates practical frontend development skills, including:
 
 **Submission focus:** Responsive, accessible interface and JavaScript interactivity.
 
-- [x] Responsive desktop and mobile layouts
+--[x] Responsive desktop and mobile layouts
 - [x] Add, edit, and delete opportunities
 - [x] Search and status filtering
 - [x] Dashboard statistics
 - [x] Local storage persistence
 - [x] Form validation
-- [ ] Live deployment
-- [ ] Final submission review
-
+- [x] Live deployment
+- [x] Final submission review
 ## Links
 
 - **GitHub Repository:**(https://github.com/codepro233/job-tracker)
@@ -251,9 +250,33 @@ This project is currently a learning project. Add a license if you intend to dis
 - [x] Keep remote listings separate from personal job records.
 
 ### Final verification
-- [ ] Run `npm run build` successfully.
-- [ ] Test remote jobs, search, loading, error, and empty states.
-- [ ] Verify desktop, tablet, and phone layouts.
-- [ ] Confirm the live deployment works.
-- [ ] Review the issue log and mentor feedback response.
-- [ ] Create the `week-2` Git tag after final checks.
+
+- [x] Run `npm run build` successfully.
+- [x] Test remote job listings and search.
+- [x] Verify loading, error, and empty-state handling.
+- [x] Test personal job application search and status filtering.
+- [x] Verify adding, editing, and deleting job applications.
+- [x] Verify dashboard statistics and local storage persistence.
+- [x] Verify desktop, tablet, and phone layouts.
+- [x] Confirm the Vercel Preview deployment works.
+- [x] Add the Week 2 issue log and document mentor feedback status.
+- [x] Create and push the `week-2` Git tag.
+
+
+## Week 2 — Issue Log
+
+The following issues were encountered and resolved during development of the Job Tracker Stage 2 features.
+
+| # | Issue | Options considered | Resolution |
+|---|---|---|---|
+| 1 | Incorrect import path for `JobActions` caused a Vite module resolution error. | Check the relative path and component filename. | Corrected the import path in `JobTable.jsx`. |
+| 2 | Remote job listings did not appear on the existing deployed website. | Check the API, deployed version, and Git branch. | Pushed the Stage 2 changes and verified the Vercel Preview deployment. |
+| 3 | The search field and surrounding layout needed better alignment. | Adjust the container and input CSS. | Updated the CSS and checked the layout at different viewport widths. |
+| 4 | ESLint reported an unused error variable and a state update inside an effect. | Remove the unused variable and restructure the asynchronous request. | Refactored the fetch logic and retry handler; lint and production build passed. |
+| 5 | A temporary delay used to inspect the loading state was no longer needed. | Keep the delay or remove it after testing. | Removed the temporary delay before the Stage 2 commit. |
+
+## Week 2 — Mentor Feedback Response
+
+**Status:** No mentor feedback received as of this update.
+
+No mentor feedback changes could be made or evaluated yet. The project was tested independently against the Week 2 requirements. Any feedback received later will be reviewed and documented.
