@@ -351,12 +351,14 @@ img {
   color: #172033;
 }
 
+
 .mobile-job-card .job-actions {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
+  flex-wrap: nowrap;
+  gap: 10px;
   width: 100%;
   margin-top: 20px;
   padding-top: 16px;
@@ -365,9 +367,34 @@ img {
 
 .mobile-job-card .edit-button,
 .mobile-job-card .delete-button {
+  flex: 1;
+  min-width: 0;
+  min-height: 42px;
+  white-space: nowrap;
+}
+
+.mobile-job-card h3 {
+  min-height: 52px;
+  margin: 0 0 16px;
+  font-size: 18px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.mobile-job-card p {
+  min-height: 45px;
+  margin: 0 0 14px;
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+
+
+
+/* .mobile-job-card .edit-button,
+.mobile-job-card .delete-button {
   min-width: 105px;
   min-height: 42px;
-}
+} */
 
 /* =========================================
    11. ADD/EDIT FORM
@@ -468,12 +495,14 @@ img {
     display: none;
   }
 
+
   .mobile-job-list {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
     width: 100%;
   }
+
 
   .mobile-job-card .job-actions {
     justify-content: center;
@@ -504,6 +533,8 @@ img {
   .sidebar nav {
     display: flex;
     flex-direction: row;
+    text-align: center;
+    justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     gap: 6px;
@@ -532,6 +563,7 @@ img {
 
   .page-header h1 {
     font-size: 26px;
+
   }
 
   .page-header .add-button {
@@ -639,6 +671,7 @@ img {
   .main-content {
     padding: 18px 10px;
   }
+
 
   .sidebar {
     padding: 16px 10px;
@@ -756,3 +789,172 @@ img {
 }
 
 
+/* Remote Jobs section */
+.remote-jobs-section {
+  margin-top: 32px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+
+}
+
+.remote-jobs-header {
+  margin-bottom: 20px;
+}
+
+.remote-jobs-header h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+  color: #111827;
+}
+
+.remote-jobs-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.remote-jobs-search {
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto 24px;
+}
+
+.remote-jobs-search label {
+  display: block;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.remote-jobs-search input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font: inherit;
+}
+
+.remote-jobs-search input:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
+.remote-jobs-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.remote-job-card {
+  min-width: 0;
+  padding: 18px;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+.remote-job-card h3 {
+  margin: 0 0 10px;
+  color: #111827;
+  font-size: 17px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.remote-job-card p {
+  margin: 8px 0;
+  color: #4b5563;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.remote-job-company {
+  font-weight: 600;
+  color: #374151 !important;
+}
+
+.remote-job-link {
+  display: inline-block;
+  margin-top: 12px;
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.remote-job-link:hover {
+  text-decoration: underline;
+}
+
+.remote-jobs-message {
+  padding: 16px;
+  border-radius: 8px;
+  background: #f9fafb;
+  color: #374151;
+}
+
+.remote-jobs-error {
+  color: #991b1b;
+  background: #fef2f2;
+}
+
+.remote-jobs-retry {
+  margin-top: 8px;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.remote-jobs-retry:hover {
+  background: #1d4ed8;
+}
+
+@media (max-width: 700px) {
+  .remote-jobs-section {
+    padding: 16px;
+  }
+
+  .remote-jobs-list {
+    grid-template-columns: 1fr;
+  }
+
+  .remote-jobs-header h2 {
+    font-size: 20px;
+  }
+}
+
+/* Center fetched remote-job cards on tablets */
+@media (min-width: 601px) and (max-width: 1000px) {
+  .remote-jobs-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .remote-job-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .remote-job-card h3,
+  .remote-job-card p {
+    width: 100%;
+    text-align: center;
+    overflow-wrap: anywhere;
+  }
+
+  .remote-job-link {
+    display: inline-block;
+    align-self: center;
+    margin-top: auto;
+    padding-top: 16px;
+    text-align: center;
+  }
+}

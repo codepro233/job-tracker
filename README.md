@@ -1,5 +1,6 @@
 # JOB-TRACkER
 
+
 A responsive job application tracker that helps job seekers organize opportunities, manage application progress, and keep track of their job search in one place.
 
 ## Overview
@@ -19,6 +20,10 @@ The application uses browser local storage to retain job records after refreshin
 - **Persistent storage:** Keep job records in the current browser using local storage.
 - **Responsive interface:** Use a desktop table or mobile-friendly job cards.
 - **Form validation:** Prevent incomplete entries and future dates.
+- **Remote job listings:** Fetch remote opportunities from the Remotive public API.
+- **Async data handling:** Display loading, error, retry, and empty states.
+- **Remote job search:** Filter fetched opportunities by job title or company.
+- **Original job links:** Visit the source listing on Remotive.
 
 ## Technologies
 
@@ -29,6 +34,9 @@ The application uses browser local storage to retain job records after refreshin
 - Vite
 - Browser Local Storage
 - Git and GitHub
+- Fetch API
+- Remotive Public API
+- Async/Await
 
 ## Getting Started
 
@@ -41,14 +49,14 @@ Install Node.js and npm, and make sure Git is available.
 1. Clone the repository:
 
    ```bash
-   git clone YOUR_GITHUB_REPOSITORY_URL
+   git clone https://github.com/codepro233/job-tracker.git
    ```
 
 2. Open the project directory:
 
    ```bash
             
-           cd Job-tracker
+           cd job-tracker
    ```
 
 3. Install dependencies:
@@ -72,20 +80,84 @@ Install Node.js and npm, and make sure Git is available.
 ```text
 Job-Tracker/
 ├── public/
+│
 ├── src/
+│   ├── assets/
+│   │   └── hero.png
+│   │
 │   ├── components/
 │   │   ├── DashboardHeader.jsx
 │   │   ├── JobForm.jsx
 │   │   ├── JobTable.jsx
+│   │   ├── JobActions.jsx       # NEW
+│   │   ├── RemoteJobs.jsx       # NEW
 │   │   ├── Sidebar.jsx
 │   │   └── StatsGrid.jsx
-│   ├── App.jsx
-│   ├── App.css
+│   │
+│   ├── App.jsx                  # UPDATED
+│   ├── App.css                  # UPDATED
 │   └── main.jsx
+│
+├── .gitignore                   # UPDATED
 ├── index.html
 ├── package.json
-└── README.md
+├── package-lock.json
+├── README.md                    # UPDATED
+└── vite.config.js
 ```
+## Component Map
+
+The Job Tracker application is built with reusable React components. The `App` component manages the main job data and passes information and callback functions to its child components through props.
+
+```text
+App
+├── Sidebar
+└── Main Content
+    ├── DashboardHeader
+    ├── JobForm (conditional)
+    ├── StatsGrid
+    └── JobTable
+        └── JobActions
+```
+src/
+├── components/
+│   ├── DashboardHeader.jsx
+│   ├── JobActions.jsx
+│   ├── JobForm.jsx
+│   ├── JobTable.jsx
+│   ├── RemoteJobs.jsx
+│   ├── Sidebar.jsx
+│   └── StatsGrid.jsx
+├── App.jsx
+├── App.css
+└── main.jsx
+
+### Component responsibilities
+
+| Component | Responsibility |
+|---|---|
+| `App.jsx` | Manages job data, form visibility, adding, editing, deleting, and localStorage persistence. Connects the dashboard components and passes data and functions through props. |
+| `Sidebar.jsx` | Displays the application's navigation. |
+| `DashboardHeader.jsx` | Displays the dashboard heading and the button for opening or closing the job form. |
+| `JobForm.jsx` | Collects and validates job details, then passes submitted data to `App`. Supports adding new jobs and editing existing jobs if implemented. |
+| `StatsGrid.jsx` | Calculates and displays job application statistics from the `jobs` prop. |
+| `JobTable.jsx` | Displays saved job opportunities and provides search, status filtering, and desktop/mobile layouts. Uses `JobActions` for job actions. |
+| `JobActions.jsx` | Provides reusable Edit and Delete buttons shared by the desktop table and mobile cards. Calls the appropriate callback functions passed through props. |
+| `RemoteJobs.jsx` | Displays remote job opportunities separately from saved job applications. Handles remote listing presentation and related interactions according to its implementation. |
+
+
+### Data flow and state management
+
+- `App.jsx` owns the main `jobs` state because multiple components need access to the same job data.
+- `App.jsx` passes `jobs` to `StatsGrid.jsx` and `JobTable.jsx` through props.
+- `JobForm.jsx` receives `initialJob`, `onSave`, and `onCancel` props to support creating and editing job opportunities.
+- `JobTable.jsx` passes each job and the edit/delete callback functions to `JobActions.jsx`.
+- `JobActions.jsx` calls the supplied edit and delete callbacks when the user clicks the corresponding buttons.
+- `JobTable.jsx` manages its own search term and status filter because those values are specific to the job list.
+- `RemoteJobs.jsx` manages or displays remote job listings separately from saved job applications, according to its implementation. Any shared state or callbacks are passed through props as needed.
+- `App.jsx` saves changes to job applications in browser `localStorage` so the data persists after a page refresh.
+- Data flows from parent components to child components through props, while child components communicate user actions back to their parents through callback functions.
+
 
 *The structure above describes the expected main files. Update it if your actual project differs.*
 
@@ -159,3 +231,29 @@ This project demonstrates practical frontend development skills, including:
 ## License
 
 This project is currently a learning project. Add a license if you intend to distribute or reuse it publicly.
+
+## BuildLab — Week 2
+
+**Focus:** Component-based development and API data integration.
+
+### Task 2.1 — Component-based development
+- [x] Build the interface using reusable React components.
+- [x] Separate job actions into a reusable component.
+- [x] Document component responsibilities and data flow.
+
+### Task 2.2 — API data integration
+- [x] Fetch remote job listings from the Remotive public API.
+- [x] Handle asynchronous requests using `fetch` and `async/await`.
+- [x] Display loading and error states with a retry option.
+- [x] Handle empty results and searches with no matches.
+- [x] Filter remote jobs by title or company.
+- [x] Display responsive job cards and original listing links.
+- [x] Keep remote listings separate from personal job records.
+
+### Final verification
+- [ ] Run `npm run build` successfully.
+- [ ] Test remote jobs, search, loading, error, and empty states.
+- [ ] Verify desktop, tablet, and phone layouts.
+- [ ] Confirm the live deployment works.
+- [ ] Review the issue log and mentor feedback response.
+- [ ] Create the `week-2` Git tag after final checks.

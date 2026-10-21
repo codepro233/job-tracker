@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Local Week 1 archive and nested repository
+/job-tracker-week-1.zip
+/job-tracker/

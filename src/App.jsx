@@ -7,6 +7,7 @@ import DashboardHeader from "./components/DashboardHeader";
 import StatsGrid from "./components/StatsGrid";
 import JobForm from "./components/JobForm";
 import JobTable from "./components/JobTable";
+import RemoteJobs from "./components/RemoteJobs";
 
 const STORAGE_KEY = "jobTrackerJobs";
 
@@ -139,6 +140,7 @@ function App() {
           onEditJob={handleEditJob}
           onDeleteJob={handleDeleteJob}
         />
+        <RemoteJobs/>
       </main>
     </div>
   );

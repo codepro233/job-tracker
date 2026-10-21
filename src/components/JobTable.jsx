@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import JobActions from "./JobActions";
 
 function JobTable({ jobs, onEditJob, onDeleteJob }) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -97,21 +98,11 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
 
                     <td>
                       <div className="job-actions">
-                        <button
-                          className="edit-button"
-                          type="button"
-                          onClick={() => onEditJob(job)}
-                        >
-                          Edit
-                        </button>
-
-                        <button
-                          className="delete-button"
-                          type="button"
-                          onClick={() => onDeleteJob(job.id)}
-                        >
-                          Delete
-                        </button>
+                        <JobActions
+                        job={job}
+                         onEditJob={onEditJob}
+                    onDeleteJob={onDeleteJob}
+                     />
                       </div>
                     </td>
                   </tr>
@@ -140,21 +131,11 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
                 </p>
 
                 <div className="job-actions">
-                  <button
-                    className="edit-button"
-                    type="button"
-                    onClick={() => onEditJob(job)}
-                  >
-                    Edit
-                  </button>
-
-                  <button
-                    className="delete-button"
-                    type="button"
-                    onClick={() => onDeleteJob(job.id)}
-                  >
-                    Delete
-                  </button>
+                  <JobActions
+                    job={job}
+                    onEditJob={onEditJob}
+                    onDeleteJob={onDeleteJob}
+                  />
                 </div>
               </article>
             ))}
