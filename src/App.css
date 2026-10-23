@@ -414,11 +414,15 @@ img {
   border: 1px solid #e5e9f2;
   border-radius: 12px;
   background: #ffffff;
+  
 }
 
 .form-section h2 {
   margin: 0 0 20px;
-  font-size: 22px;
+  font-size: 28px;
+  line-height: 1.4;
+  color:  #5985ee;
+  
 }
 
 .form-section form {
