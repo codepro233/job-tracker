@@ -75,7 +75,8 @@ img {
 
 .sidebar h2 {
   margin: 0 0 32px;
-  font-size: 25px;
+  font-size: 30px;
+  font-weight: 700;
   line-height: 1.4;
   overflow-wrap: anywhere;
 }
@@ -121,7 +122,8 @@ img {
 
 .page-header h1 {
   margin: 0 0 8px;
-  font-size: 30px;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.3;
   overflow-wrap: anywhere;
 }
@@ -140,13 +142,13 @@ img {
   padding: 12px 18px;
   border: none;
   border-radius: 8px;
-  background: #3732a3;
+  background: #5985ee;
   color: #ffffff;
   white-space: normal;
 }
 
 .add-button:hover {
-  background: #4338ca;
+  background: #103386;
 }
 
 /* =========================================
@@ -170,8 +172,10 @@ img {
 
 .stat-card h2 {
   margin: 14px 0 0;
-  font-size: 30px;
+  font-size: 32px;
+  font-weight: 700;
   line-height: 1.3;
+  color: #1d4ed8;
   overflow-wrap: anywhere;
 }
 
@@ -199,6 +203,8 @@ img {
   margin: 0 0 20px;
   font-size: 22px;
   line-height: 1.4;
+  color:#5985ee;
+  font-weight: bold;
 }
 
 /* =========================================
