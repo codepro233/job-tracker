@@ -1313,3 +1313,34 @@ textarea:focus-visible {
 .page-header .add-button {
   margin-bottom: 8px;
 }
+
+/* Match the Date Added field to the other form inputs */
+.form-section input[type="date"],
+.job-form input[type="date"],
+.add-job-form input[type="date"] {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  min-height: 46px;
+  padding: 11px 14px;
+  color: #1e293b;
+  background-color: #ffffff;
+  border: 1px solid #dbe4f0;
+  border-radius: 9px;
+  font-family: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+/* Keep the date field consistent when selected */
+.form-section input[type="date"]:focus,
+.job-form input[type="date"]:focus,
+.add-job-form input[type="date"]:focus {
+  outline: 2px solid rgba(255, 255, 255, 0.65);
+  outline-offset: 1px;
+  border-color: #ffffff;
+}
