@@ -1,23 +1,35 @@
 # Job Tracker
 
-A responsive React application for organising job applications, tracking application progress, and discovering remote job opportunities.
+A responsive React application for organising job applications, tracking application progress, analysing application performance, and discovering remote job opportunities.
 
 ## Project Links
 
-- **GitHub:** https://github.com/codepro233/job-tracker
-- **Live Demo:** https://job-tracker-gilt-seven.vercel.app/
+- **GitHub:** [https://github.com/codepro233/job-tracker](https://github.com/codepro233/job-tracker)
+- **Live Demo:** [https://job-tracker-gilt-seven.vercel.app/](https://job-tracker-gilt-seven.vercel.app/)
 
 ## Features
 
 ### Personal Job Applications
+
 - Add, edit, and delete job opportunities.
 - Search by job title or company.
 - Filter applications by status.
+- Paginate job applications, displaying five opportunities per page.
 - View dashboard statistics.
 - Store job records in browser local storage.
 - Validate required fields and application dates.
 
+### Dashboard Analytics
+
+- View total jobs, applications, interviews, and offers.
+- Calculate application success rate.
+- Calculate interview rate and rejection rate.
+- View a visual breakdown of application statuses.
+- Display percentage progress bars for each status.
+- Automatically update analytics when application records change.
+
 ### Remote Job Listings
+
 - Fetch remote opportunities from the Remotive public API.
 - Search remote jobs by title or company.
 - Handle loading, errors, retries, and empty results.
@@ -25,6 +37,7 @@ A responsive React application for organising job applications, tracking applica
 - Keep remote listings separate from personal applications.
 
 ### Navigation and User Experience
+
 - Dashboard and individual job detail pages.
 - Save and manage favourite opportunities.
 - Direct links to job details.
@@ -74,12 +87,12 @@ Open the local URL displayed in your terminal, usually `http://localhost:5173`.
 
 ### Available Commands
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start the development server |
-| `npm run build` | Create a production build |
-| `npm run lint` | Run ESLint checks |
-| `npm run test` | Run automated tests |
+| Command           | Description                  |
+| ----------------- | ---------------------------- |
+| `npm run dev`     | Start the development server |
+| `npm run build`   | Create a production build    |
+| `npm run lint`    | Run ESLint checks            |
+| `npm run test`    | Run automated tests          |
 | `npm run preview` | Preview the production build |
 
 ## Project Structure
@@ -119,28 +132,57 @@ job-tracker/
 
 `App.jsx` manages the main application state, including personal job records and favourite IDs. Data is passed to child components through props, while callback functions handle user actions.
 
-| Component or Page | Responsibility |
-|---|---|
-| `App.jsx` | Manages job records, favourites, and application actions |
-| `Sidebar.jsx` | Provides dashboard navigation |
-| `DashboardHeader.jsx` | Displays the dashboard heading and add-job action |
-| `JobForm.jsx` | Handles adding, editing, and validating job details |
-| `StatsGrid.jsx` | Displays application statistics |
-| `JobTable.jsx` | Displays personal applications, search, and status filters |
-| `JobActions.jsx` | Provides reusable edit and delete actions |
-| `RemoteJobs.jsx` | Fetches and displays remote job listings |
-| `JobDetails.jsx` | Displays an individual job opportunity |
-| `Favorites.jsx` | Displays saved favourite opportunities |
-| `NotFound.jsx` | Displays the not-found page |
+| Component or Page     | Responsibility                                                    |
+| --------------------- | ----------------------------------------------------------------- |
+| `App.jsx`             | Manages job records, favourites, and application actions          |
+| `Sidebar.jsx`         | Provides dashboard navigation                                     |
+| `DashboardHeader.jsx` | Displays the dashboard heading and add-job action                 |
+| `JobForm.jsx`         | Handles adding, editing, and validating job details               |
+| `StatsGrid.jsx`       | Displays dashboard statistics and application analytics           |
+| `JobTable.jsx`        | Displays personal applications, search, filtering, and pagination |
+| `JobActions.jsx`      | Provides reusable edit and delete actions                         |
+| `RemoteJobs.jsx`      | Fetches and displays remote job listings                          |
+| `JobDetails.jsx`      | Displays an individual job opportunity                            |
+| `Favorites.jsx`       | Displays saved favourite opportunities                            |
+| `NotFound.jsx`        | Displays the not-found page                                       |
 
 ### Routes
 
-| Route | Description |
-|---|---|
-| `/` | Dashboard |
-| `/jobs/:id` | Individual job details |
+| Route        | Description             |
+| ------------ | ----------------------- |
+| `/`          | Dashboard               |
+| `/jobs/:id`  | Individual job details  |
 | `/favorites` | Favourite opportunities |
-| `*` | Not-found page |
+| `*`          | Not-found page          |
+
+## Dashboard Analytics
+
+The dashboard provides an overview of job application performance.
+
+### Application Statistics
+
+- Total jobs.
+- Applications.
+- Interviews.
+- Offers.
+
+### Performance Metrics
+
+- **Success Rate:** Offers divided by submitted applications.
+- **Interview Rate:** Interviews divided by submitted applications.
+- **Rejection Rate:** Rejected applications divided by submitted applications.
+
+Saved opportunities are excluded from submitted application calculations.
+
+### Application Status Breakdown
+
+The dashboard displays the number and percentage of opportunities in each status:
+
+- Saved
+- Applied
+- Interview
+- Offer
+- Rejected
 
 ## Data Storage and Limitations
 
@@ -172,6 +214,12 @@ The current test suite covers:
 - Favourite-button interaction.
 
 **Latest recorded result:** 4 automated tests passed.
+
+### Code Quality and Build Verification
+
+- ESLint checks passed after the pagination and analytics updates.
+- Production build passed after the pagination and analytics updates.
+- Manual pagination testing completed on desktop and mobile.
 
 ### Accessibility Checks
 
@@ -210,19 +258,19 @@ The current test suite covers:
 
 ### Week 2 — Issue Log
 
-| Issue | Resolution |
-|---|---|
-| Incorrect JobActions import path | Corrected the import path. |
+| Issue                                   | Resolution                                            |
+| --------------------------------------- | ----------------------------------------------------- |
+| Incorrect JobActions import path        | Corrected the import path.                            |
 | Remote listings missing from deployment | Updated the deployed branch and verified the preview. |
-| Search and layout alignment issues | Adjusted CSS and checked responsive layouts. |
-| ESLint warnings | Refactored fetch logic and removed unused code. |
-| Temporary loading delay | Removed after testing. |
+| Search and layout alignment issues      | Adjusted CSS and checked responsive layouts.          |
+| ESLint warnings                         | Refactored fetch logic and removed unused code.       |
+| Temporary loading delay                 | Removed after testing.                                |
 
 **Mentor feedback:** No mentor feedback received as of the latest update.
 
 ### Week 3 — Routing, State, Testing, and Accessibility
 
-**Focus:** Multi-page navigation, persistent favourites, automated testing, and accessibility.
+**Focus:** Multi-page navigation, persistent favourites, automated testing, accessibility, and dashboard improvements.
 
 - [x] Add React Router navigation.
 - [x] Create individual job detail pages.
@@ -233,9 +281,17 @@ The current test suite covers:
 - [x] Verify four automated tests pass.
 - [x] Perform manual keyboard navigation checks.
 - [x] Review Lighthouse accessibility results.
-- [ ] Complete final production deployment verification.
-- [ ] Create and push the `week-3` Git tag.
-- [ ] Complete final submission review.
+- [x] Add pagination with five opportunities per page.
+- [x] Add previous, next, and numbered page navigation.
+- [x] Support pagination on desktop and mobile.
+- [x] Add dashboard application performance metrics.
+- [x] Add application status breakdown and progress bars.
+- [x] Verify ESLint checks pass.
+- [x] Verify production build passes.
+- [x] Commit and push pagination and analytics improvements.
+- [x] Create and push the `week-3` Git tag.
+- [x] Complete final production deployment verification.
+- [x] Complete final submission review.
 
 ## Future Improvements
 
@@ -245,6 +301,4 @@ The current test suite covers:
 - Application reminders and follow-up dates.
 - Advanced search and analytics.
 
-## License
 
-This project is currently a learning project. No open-source licence has been added.
