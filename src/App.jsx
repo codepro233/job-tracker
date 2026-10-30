@@ -1,8 +1,7 @@
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
-
 
 import Sidebar from "./components/Sidebar";
 import DashboardHeader from "./components/DashboardHeader";
@@ -59,17 +58,19 @@ function loadJobs() {
 }
 
 function App() {
+  const jobFormRef = useRef(null);
+
   const [jobs, setJobs] = useState(loadJobs);
 
-const [favoriteIds, setFavoriteIds] = useState(() => {
-  try {
-    const savedFavorites = localStorage.getItem("jobTrackerFavorites");
-    return savedFavorites ? JSON.parse(savedFavorites) : [];
-  } catch (error) {
-    console.error("Could not load saved favourites:", error);
-    return [];
-  }
-});
+  const [favoriteIds, setFavoriteIds] = useState(() => {
+    try {
+      const savedFavorites = localStorage.getItem("jobTrackerFavorites");
+      return savedFavorites ? JSON.parse(savedFavorites) : [];
+    } catch (error) {
+      console.error("Could not load saved favourites:", error);
+      return [];
+    }
+  });
 
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
@@ -83,17 +84,27 @@ const [favoriteIds, setFavoriteIds] = useState(() => {
     }
   }, [jobs]);
 
-useEffect(() => {
-  try {
-    localStorage.setItem(
-      "jobTrackerFavorites",
-      JSON.stringify(favoriteIds)
-    );
-  } catch (error) {
-    console.error("Could not save favourites:", error);
-  }
-}, [favoriteIds]);
+  // Save favourites whenever the favourites state changes.
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        "jobTrackerFavorites",
+        JSON.stringify(favoriteIds)
+      );
+    } catch (error) {
+      console.error("Could not save favourites:", error);
+    }
+  }, [favoriteIds]);
 
+  // Scroll to the form when editing an existing job.
+  useEffect(() => {
+    if (showForm && selectedJob) {
+      jobFormRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }, [showForm, selectedJob]);
 
   function handleAddClick() {
     setSelectedJob(null);
@@ -142,18 +153,16 @@ useEffect(() => {
     setShowForm(false);
   }
 
-function handleToggleFavorite(jobId) {
-  const id = String(jobId);
+  function handleToggleFavorite(jobId) {
+    const id = String(jobId);
 
-  setFavoriteIds((previousIds) =>
-    previousIds.includes(id)
-      ? previousIds.filter((favoriteId) => favoriteId !== id)
-      : [...previousIds, id]
-  );
-}
+    setFavoriteIds((previousIds) =>
+      previousIds.includes(id)
+        ? previousIds.filter((favoriteId) => favoriteId !== id)
+        : [...previousIds, id]
+    );
+  }
 
-
-  
   return (
     <BrowserRouter>
       <Routes>
@@ -170,12 +179,14 @@ function handleToggleFavorite(jobId) {
                 />
 
                 {showForm && (
-                  <JobForm
-                    key={selectedJob?.id ?? "new"}
-                    initialJob={selectedJob}
-                    onSave={handleSaveJob}
-                    onCancel={handleCancelForm}
-                  />
+                  <div ref={jobFormRef}>
+                    <JobForm
+                      key={selectedJob?.id ?? "new"}
+                      initialJob={selectedJob}
+                      onSave={handleSaveJob}
+                      onCancel={handleCancelForm}
+                    />
+                  </div>
                 )}
 
                 <StatsGrid jobs={jobs} />
@@ -185,7 +196,7 @@ function handleToggleFavorite(jobId) {
                   onEditJob={handleEditJob}
                   onDeleteJob={handleDeleteJob}
                   favoriteIds={favoriteIds}
-                  onToggleFavorite={handleToggleFavorite} 
+                  onToggleFavorite={handleToggleFavorite}
                 />
 
                 <RemoteJobs />
@@ -198,20 +209,20 @@ function handleToggleFavorite(jobId) {
           path="/jobs/:id"
           element={<JobDetails jobs={jobs} />}
         />
+
         <Route
-path="/favorites"
-element={
-<Favorites
-   jobs={jobs}
-   favoriteIds={favoriteIds}
-   onToggleFavorite={handleToggleFavorite}
- />
-}
-/>
+          path="/favorites"
+          element={
+            <Favorites
+              jobs={jobs}
+              favoriteIds={favoriteIds}
+              onToggleFavorite={handleToggleFavorite}
+            />
+          }
+        />
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      
     </BrowserRouter>
   );
 }
