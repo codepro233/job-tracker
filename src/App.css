@@ -1370,3 +1370,35 @@ textarea:focus-visible {
   outline-offset: 1px;
   border-color: #ffffff;
 }
+
+/* Dashboard: Add Opportunity / Close Form */
+.page-header .add-button {
+  background: #2d52a4;
+  color: #ffffff;
+  border: 1px solid #2d52a4;
+  border-radius: 10px;
+  padding: 12px 20px;
+  min-height: 46px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.page-header .add-button:hover {
+  background: #23458f;
+  border-color: #23458f;
+}
+
+.page-header .add-button:focus-visible {
+  outline: 2px solid #2d52a4;
+  outline-offset: 3px;
+}
+
+@media (max-width: 560px) {
+  .page-header .add-button {
+    width: 100%;
+    min-height: 48px;
+    padding: 13px 16px;
+  }
+}
