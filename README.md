@@ -1,282 +1,250 @@
-# JOB-TRACkER
+# Job Tracker
 
+A responsive React application for organising job applications, tracking application progress, and discovering remote job opportunities.
 
-A responsive job application tracker that helps job seekers organize opportunities, manage application progress, and keep track of their job search in one place.
+## Project Links
 
-## Overview
-
-Job-Track is a frontend web application built with React. It provides a simple dashboard for recording job opportunities, updating application statuses, and finding saved applications quickly.
-
-The application uses browser local storage to retain job records after refreshing the page.
+- **GitHub:** https://github.com/codepro233/job-tracker
+- **Live Demo:** https://job-tracker-gilt-seven.vercel.app/
 
 ## Features
 
-- **Add opportunities:** Record job titles, company names, application statuses, and dates.
-- **Edit opportunities:** Update existing job information.
-- **Delete opportunities:** Remove opportunities you no longer need.
-- **Search:** Find opportunities by job title or company name.
-- **Filter by status:** View saved, applied, interview, offer, or rejected applications.
-- **Dashboard statistics:** Track application progress as your records change.
-- **Persistent storage:** Keep job records in the current browser using local storage.
-- **Responsive interface:** Use a desktop table or mobile-friendly job cards.
-- **Form validation:** Prevent incomplete entries and future dates.
-- **Remote job listings:** Fetch remote opportunities from the Remotive public API.
-- **Async data handling:** Display loading, error, retry, and empty states.
-- **Remote job search:** Filter fetched opportunities by job title or company.
-- **Original job links:** Visit the source listing on Remotive.
+### Personal Job Applications
+- Add, edit, and delete job opportunities.
+- Search by job title or company.
+- Filter applications by status.
+- View dashboard statistics.
+- Store job records in browser local storage.
+- Validate required fields and application dates.
 
-## Technologies
+### Remote Job Listings
+- Fetch remote opportunities from the Remotive public API.
+- Search remote jobs by title or company.
+- Handle loading, errors, retries, and empty results.
+- Open original job listings.
+- Keep remote listings separate from personal applications.
+
+### Navigation and User Experience
+- Dashboard and individual job detail pages.
+- Save and manage favourite opportunities.
+- Direct links to job details.
+- Custom not-found page.
+- Responsive desktop and mobile layouts.
+- Keyboard-accessible navigation and form controls.
+
+## Technology Stack
 
 - React
 - JavaScript
-- HTML5
-- CSS3
+- React Router
 - Vite
+- HTML5 and CSS3
 - Browser Local Storage
-- Git and GitHub
-- Fetch API
+- Fetch API and async/await
 - Remotive Public API
-- Async/Await
+- Vitest
+- React Testing Library
+- Git and GitHub
 
 ## Getting Started
 
 ### Prerequisites
 
-Install Node.js and npm, and make sure Git is available.
+- Node.js
+- npm
+- Git
 
 ### Installation
 
-1. Clone the repository:
+Clone the repository:
 
-   ```bash
-   git clone https://github.com/codepro233/job-tracker.git
-   ```
+```bash
+git clone https://github.com/codepro233/job-tracker.git
+cd job-tracker
+npm install
+```
 
-2. Open the project directory:
+Start the development server:
 
-   ```bash
-            
-           cd job-tracker
-   ```
+```bash
+npm run dev
+```
 
-3. Install dependencies:
+Open the local URL displayed in your terminal, usually `http://localhost:5173`.
 
-   ```bash
-   npm install
-   ```
+### Available Commands
 
-4. Start the development server:
-
-   ```bash
-   npm run dev
-   ```
-
-5. Open the local URL shown in your terminal, usually:
-
-   `http://localhost:5173`
+| Command | Description |
+|---|---|
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run lint` | Run ESLint checks |
+| `npm run test` | Run automated tests |
+| `npm run preview` | Preview the production build |
 
 ## Project Structure
 
 ```text
-Job-Tracker/
-├── public/
-│
+job-tracker/
 ├── src/
 │   ├── assets/
-│   │   └── hero.png
-│   │
 │   ├── components/
 │   │   ├── DashboardHeader.jsx
+│   │   ├── JobActions.jsx
 │   │   ├── JobForm.jsx
 │   │   ├── JobTable.jsx
-│   │   ├── JobActions.jsx       # NEW
-│   │   ├── RemoteJobs.jsx       # NEW
+│   │   ├── RemoteJobs.jsx
 │   │   ├── Sidebar.jsx
 │   │   └── StatsGrid.jsx
-│   │
-│   ├── App.jsx                  # UPDATED
-│   ├── App.css                  # UPDATED
+│   ├── pages/
+│   │   ├── Favorites.jsx
+│   │   ├── JobDetails.jsx
+│   │   └── NotFound.jsx
+│   ├── test/
+│   │   └── setup.js
+│   ├── __tests__/
+│   │   └── App.test.jsx
+│   ├── App.jsx
+│   ├── App.css
+│   ├── index.css
 │   └── main.jsx
-│
-├── .gitignore                   # UPDATED
 ├── index.html
 ├── package.json
 ├── package-lock.json
-├── README.md                    # UPDATED
-└── vite.config.js
+├── vite.config.js
+└── README.md
 ```
-## Component Map
 
-The Job Tracker application is built with reusable React components. The `App` component manages the main job data and passes information and callback functions to its child components through props.
+## Application Architecture
 
-```text
-App
-├── Sidebar
-└── Main Content
-    ├── DashboardHeader
-    ├── JobForm (conditional)
-    ├── StatsGrid
-    └── JobTable
-        └── JobActions
-```
-src/
-├── components/
-│   ├── DashboardHeader.jsx
-│   ├── JobActions.jsx
-│   ├── JobForm.jsx
-│   ├── JobTable.jsx
-│   ├── RemoteJobs.jsx
-│   ├── Sidebar.jsx
-│   └── StatsGrid.jsx
-├── App.jsx
-├── App.css
-└── main.jsx
+`App.jsx` manages the main application state, including personal job records and favourite IDs. Data is passed to child components through props, while callback functions handle user actions.
 
-### Component responsibilities
-
-| Component | Responsibility |
+| Component or Page | Responsibility |
 |---|---|
-| `App.jsx` | Manages job data, form visibility, adding, editing, deleting, and localStorage persistence. Connects the dashboard components and passes data and functions through props. |
-| `Sidebar.jsx` | Displays the application's navigation. |
-| `DashboardHeader.jsx` | Displays the dashboard heading and the button for opening or closing the job form. |
-| `JobForm.jsx` | Collects and validates job details, then passes submitted data to `App`. Supports adding new jobs and editing existing jobs if implemented. |
-| `StatsGrid.jsx` | Calculates and displays job application statistics from the `jobs` prop. |
-| `JobTable.jsx` | Displays saved job opportunities and provides search, status filtering, and desktop/mobile layouts. Uses `JobActions` for job actions. |
-| `JobActions.jsx` | Provides reusable Edit and Delete buttons shared by the desktop table and mobile cards. Calls the appropriate callback functions passed through props. |
-| `RemoteJobs.jsx` | Displays remote job opportunities separately from saved job applications. Handles remote listing presentation and related interactions according to its implementation. |
+| `App.jsx` | Manages job records, favourites, and application actions |
+| `Sidebar.jsx` | Provides dashboard navigation |
+| `DashboardHeader.jsx` | Displays the dashboard heading and add-job action |
+| `JobForm.jsx` | Handles adding, editing, and validating job details |
+| `StatsGrid.jsx` | Displays application statistics |
+| `JobTable.jsx` | Displays personal applications, search, and status filters |
+| `JobActions.jsx` | Provides reusable edit and delete actions |
+| `RemoteJobs.jsx` | Fetches and displays remote job listings |
+| `JobDetails.jsx` | Displays an individual job opportunity |
+| `Favorites.jsx` | Displays saved favourite opportunities |
+| `NotFound.jsx` | Displays the not-found page |
 
+### Routes
 
-### Data flow and state management
-
-- `App.jsx` owns the main `jobs` state because multiple components need access to the same job data.
-- `App.jsx` passes `jobs` to `StatsGrid.jsx` and `JobTable.jsx` through props.
-- `JobForm.jsx` receives `initialJob`, `onSave`, and `onCancel` props to support creating and editing job opportunities.
-- `JobTable.jsx` passes each job and the edit/delete callback functions to `JobActions.jsx`.
-- `JobActions.jsx` calls the supplied edit and delete callbacks when the user clicks the corresponding buttons.
-- `JobTable.jsx` manages its own search term and status filter because those values are specific to the job list.
-- `RemoteJobs.jsx` manages or displays remote job listings separately from saved job applications, according to its implementation. Any shared state or callbacks are passed through props as needed.
-- `App.jsx` saves changes to job applications in browser `localStorage` so the data persists after a page refresh.
-- Data flows from parent components to child components through props, while child components communicate user actions back to their parents through callback functions.
-
-
-*The structure above describes the expected main files. Update it if your actual project differs.*
-
-## Usage
-
-1. Open  Job Tracker.
-2. Add a job opportunity using the job form.
-3. Enter the job title, company, status, and date.
-4. Edit or delete an opportunity when necessary.
-5. Search by job title or company.
-6. Filter applications by status.
-7. Refresh the page to verify that saved records remain available.
+| Route | Description |
+|---|---|
+| `/` | Dashboard |
+| `/jobs/:id` | Individual job details |
+| `/favorites` | Favourite opportunities |
+| `*` | Not-found page |
 
 ## Data Storage and Limitations
 
- Job Tracker currently stores job records in the browser's local storage.
+The application uses browser local storage for personal job records and favourite IDs.
 
-- Records persist across page refreshes in the same browser.
-- Data is not automatically synchronized between devices or browsers.
-- Clearing the browser's site data can remove stored records.
+- Data remains available after refreshing the page in the same browser.
+- Data is not synchronised between devices.
+- Clearing browser site data can remove saved records.
 - The application does not currently use a backend database or user authentication.
+- Remote job listings depend on the availability of the Remotive public API.
 
-## Screenshots
+## Testing and Accessibility
 
-Project screenshots are available in the repository. Add their relative paths here once confirmed.
+### Automated Tests
 
-Example:
+The project uses Vitest and React Testing Library.
 
-```markdown
-![ Job Tracker dashboard](./screenshots/dashboard.png)
+Run the tests:
+
+```bash
+npm run test
 ```
 
-## Project Goals
+The current test suite covers:
 
-This project demonstrates practical frontend development skills, including:
+- Dashboard rendering.
+- Searching job opportunities by company.
+- Filtering applications by status.
+- Favourite-button interaction.
 
-- Building reusable React components
-- Managing application state with React hooks
-- Handling forms and user interactions
-- Filtering and searching data
-- Implementing responsive layouts
-- Persisting data with local storage
-- Documenting and preparing a project for deployment
+**Latest recorded result:** 4 automated tests passed.
 
-## BuildLab — Week 1
+### Accessibility Checks
 
-**Submission focus:** Responsive, accessible interface and JavaScript interactivity.
+- Keyboard navigation tested manually.
+- Form controls and buttons tested using the keyboard.
+- Visible keyboard focus styles implemented.
+- Latest recorded Lighthouse accessibility score: 96/100.
 
---[x] Responsive desktop and mobile layouts
-- [x] Add, edit, and delete opportunities
-- [x] Search and status filtering
-- [x] Dashboard statistics
-- [x] Local storage persistence
-- [x] Form validation
-- [x] Live deployment
-- [x] Final submission review
-## Links
+## BuildLab Progress
 
-- **GitHub Repository:**(https://github.com/codepro233/job-tracker)
-- **Live Demo:** (https://job-tracker-gilt-seven.vercel.app/)
+### Week 1 — Frontend Development
+
+**Focus:** Responsive interface and core job-tracking functionality.
+
+- [x] Build responsive dashboard.
+- [x] Add, edit, and delete job opportunities.
+- [x] Implement search and status filtering.
+- [x] Display dashboard statistics.
+- [x] Persist records using local storage.
+- [x] Add form validation.
+- [x] Deploy the application.
+
+### Week 2 — Component Development and API Integration
+
+**Focus:** Reusable components and external API integration.
+
+- [x] Build reusable React components.
+- [x] Create reusable job actions.
+- [x] Integrate the Remotive public API.
+- [x] Implement loading and error handling.
+- [x] Add retry and empty-result handling.
+- [x] Search remote job listings.
+- [x] Keep remote listings separate from personal applications.
+- [x] Verify personal job management and local storage.
+- [x] Create and push the `week-2` Git tag.
+
+### Week 2 — Issue Log
+
+| Issue | Resolution |
+|---|---|
+| Incorrect JobActions import path | Corrected the import path. |
+| Remote listings missing from deployment | Updated the deployed branch and verified the preview. |
+| Search and layout alignment issues | Adjusted CSS and checked responsive layouts. |
+| ESLint warnings | Refactored fetch logic and removed unused code. |
+| Temporary loading delay | Removed after testing. |
+
+**Mentor feedback:** No mentor feedback received as of the latest update.
+
+### Week 3 — Routing, State, Testing, and Accessibility
+
+**Focus:** Multi-page navigation, persistent favourites, automated testing, and accessibility.
+
+- [x] Add React Router navigation.
+- [x] Create individual job detail pages.
+- [x] Add a favourites page.
+- [x] Persist favourite IDs using local storage.
+- [x] Add a custom not-found page.
+- [x] Create automated tests with Vitest and React Testing Library.
+- [x] Verify four automated tests pass.
+- [x] Perform manual keyboard navigation checks.
+- [x] Review Lighthouse accessibility results.
+- [ ] Complete final production deployment verification.
+- [ ] Create and push the `week-3` Git tag.
+- [ ] Complete final submission review.
 
 ## Future Improvements
 
-- User authentication
-- Backend database and cloud synchronization
-- Export opportunities to CSV
-- Application reminders and follow-up dates
-- Advanced search and analytics
+- User authentication.
+- Backend database and cloud synchronisation.
+- Export job applications to CSV.
+- Application reminders and follow-up dates.
+- Advanced search and analytics.
 
 ## License
 
-This project is currently a learning project. Add a license if you intend to distribute or reuse it publicly.
-
-## BuildLab — Week 2
-
-**Focus:** Component-based development and API data integration.
-
-### Task 2.1 — Component-based development
-- [x] Build the interface using reusable React components.
-- [x] Separate job actions into a reusable component.
-- [x] Document component responsibilities and data flow.
-
-### Task 2.2 — API data integration
-- [x] Fetch remote job listings from the Remotive public API.
-- [x] Handle asynchronous requests using `fetch` and `async/await`.
-- [x] Display loading and error states with a retry option.
-- [x] Handle empty results and searches with no matches.
-- [x] Filter remote jobs by title or company.
-- [x] Display responsive job cards and original listing links.
-- [x] Keep remote listings separate from personal job records.
-
-### Final verification
-
-- [x] Run `npm run build` successfully.
-- [x] Test remote job listings and search.
-- [x] Verify loading, error, and empty-state handling.
-- [x] Test personal job application search and status filtering.
-- [x] Verify adding, editing, and deleting job applications.
-- [x] Verify dashboard statistics and local storage persistence.
-- [x] Verify desktop, tablet, and phone layouts.
-- [x] Confirm the Vercel Preview deployment works.
-- [x] Add the Week 2 issue log and document mentor feedback status.
-- [x] Create and push the `week-2` Git tag.
-
-
-## Week 2 — Issue Log
-
-The following issues were encountered and resolved during development of the Job Tracker Stage 2 features.
-
-| # | Issue | Options considered | Resolution |
-|---|---|---|---|
-| 1 | Incorrect import path for `JobActions` caused a Vite module resolution error. | Check the relative path and component filename. | Corrected the import path in `JobTable.jsx`. |
-| 2 | Remote job listings did not appear on the existing deployed website. | Check the API, deployed version, and Git branch. | Pushed the Stage 2 changes and verified the Vercel Preview deployment. |
-| 3 | The search field and surrounding layout needed better alignment. | Adjust the container and input CSS. | Updated the CSS and checked the layout at different viewport widths. |
-| 4 | ESLint reported an unused error variable and a state update inside an effect. | Remove the unused variable and restructure the asynchronous request. | Refactored the fetch logic and retry handler; lint and production build passed. |
-| 5 | A temporary delay used to inspect the loading state was no longer needed. | Keep the delay or remove it after testing. | Removed the temporary delay before the Stage 2 commit. |
-
-## Week 2 — Mentor Feedback Response
-
-**Status:** No mentor feedback received as of this update.
-
-No mentor feedback changes could be made or evaluated yet. The project was tested independently against the Week 2 requirements. Any feedback received later will be reviewed and documented.
+This project is currently a learning project. No open-source licence has been added.

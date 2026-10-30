@@ -2,7 +2,13 @@
 import { useState } from "react";
 import JobActions from "./JobActions";
 
-function JobTable({ jobs, onEditJob, onDeleteJob }) {
+function JobTable({
+  jobs,
+  onEditJob,
+  onDeleteJob,
+  favoriteIds,
+  onToggleFavorite,
+})  {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("All");
 
@@ -77,10 +83,11 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
               <thead>
                 <tr>
                   <th>Job Title</th>
-                  <th>Company</th>
+                   <th>Company</th>
                   <th>Status</th>
                   <th>Date Added</th>
-                  <th>Actions</th>
+                   <th>Favourite</th>
+                   <th>Actions</th>
                 </tr>
               </thead>
 
@@ -95,13 +102,28 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
                     </td>
 
                     <td>{job.date}</td>
+                    <td>
+  <button
+    type="button"
+    className="favorite-button"
+    aria-label={
+      favoriteIds.includes(String(job.id))
+        ? `Remove ${job.title} from favourites`
+        : `Add ${job.title} to favourites`
+    }
+    aria-pressed={favoriteIds.includes(String(job.id))}
+    onClick={() => onToggleFavorite(job.id)}
+  >
+    {favoriteIds.includes(String(job.id)) ? "★ Saved" : "☆ Favourite"}
+  </button>
+</td>
 
                     <td>
                       <div className="job-actions">
                         <JobActions
                         job={job}
-                         onEditJob={onEditJob}
-                    onDeleteJob={onDeleteJob}
+                        onEditJob={onEditJob}
+                       onDeleteJob={onDeleteJob}
                      />
                       </div>
                     </td>
@@ -110,6 +132,7 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
               </tbody>
             </table>
           </div>
+         
 
           {/* Tablet and phone: responsive job cards */}
           <div className="mobile-job-list">
@@ -129,6 +152,19 @@ function JobTable({ jobs, onEditJob, onDeleteJob }) {
                 <p>
                   <strong>Date Added:</strong> {job.date}
                 </p>
+                <button
+  type="button"
+  className="favorite-button"
+  aria-label={
+    favoriteIds.includes(String(job.id))
+      ? `Remove ${job.title} from favourites`
+      : `Add ${job.title} to favourites`
+  }
+  aria-pressed={favoriteIds.includes(String(job.id))}
+  onClick={() => onToggleFavorite(job.id)}
+>
+  {favoriteIds.includes(String(job.id)) ? "★ Saved" : "☆ Favourite"}
+</button>
 
                 <div className="job-actions">
                   <JobActions

@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./App.css";
+
 
 import Sidebar from "./components/Sidebar";
 import DashboardHeader from "./components/DashboardHeader";
@@ -8,6 +10,9 @@ import StatsGrid from "./components/StatsGrid";
 import JobForm from "./components/JobForm";
 import JobTable from "./components/JobTable";
 import RemoteJobs from "./components/RemoteJobs";
+import JobDetails from "./pages/JobDetails";
+import NotFound from "./pages/NotFound";
+import Favorites from "./pages/Favorites";
 
 const STORAGE_KEY = "jobTrackerJobs";
 
@@ -55,6 +60,17 @@ function loadJobs() {
 
 function App() {
   const [jobs, setJobs] = useState(loadJobs);
+
+const [favoriteIds, setFavoriteIds] = useState(() => {
+  try {
+    const savedFavorites = localStorage.getItem("jobTrackerFavorites");
+    return savedFavorites ? JSON.parse(savedFavorites) : [];
+  } catch (error) {
+    console.error("Could not load saved favourites:", error);
+    return [];
+  }
+});
+
   const [showForm, setShowForm] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
 
@@ -66,6 +82,18 @@ function App() {
       console.error("Could not save jobs:", error);
     }
   }, [jobs]);
+
+useEffect(() => {
+  try {
+    localStorage.setItem(
+      "jobTrackerFavorites",
+      JSON.stringify(favoriteIds)
+    );
+  } catch (error) {
+    console.error("Could not save favourites:", error);
+  }
+}, [favoriteIds]);
+
 
   function handleAddClick() {
     setSelectedJob(null);
@@ -114,35 +142,77 @@ function App() {
     setShowForm(false);
   }
 
+function handleToggleFavorite(jobId) {
+  const id = String(jobId);
+
+  setFavoriteIds((previousIds) =>
+    previousIds.includes(id)
+      ? previousIds.filter((favoriteId) => favoriteId !== id)
+      : [...previousIds, id]
+  );
+}
+
+
+  
   return (
-    <div className="app">
-      <Sidebar />
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="app">
+              <Sidebar />
 
-      <main className="main-content" id="dashboard">
-        <DashboardHeader
-          showForm={showForm}
-          onAddClick={handleAddClick}
+              <main className="main-content" id="dashboard">
+                <DashboardHeader
+                  showForm={showForm}
+                  onAddClick={handleAddClick}
+                />
+
+                {showForm && (
+                  <JobForm
+                    key={selectedJob?.id ?? "new"}
+                    initialJob={selectedJob}
+                    onSave={handleSaveJob}
+                    onCancel={handleCancelForm}
+                  />
+                )}
+
+                <StatsGrid jobs={jobs} />
+
+                <JobTable
+                  jobs={jobs}
+                  onEditJob={handleEditJob}
+                  onDeleteJob={handleDeleteJob}
+                  favoriteIds={favoriteIds}
+                  onToggleFavorite={handleToggleFavorite} 
+                />
+
+                <RemoteJobs />
+              </main>
+            </div>
+          }
         />
 
-        {showForm && (
-          <JobForm
-            key={selectedJob?.id ?? "new"}
-            initialJob={selectedJob}
-            onSave={handleSaveJob}
-            onCancel={handleCancelForm}
-          />
-        )}
-
-        <StatsGrid jobs={jobs} />
-
-        <JobTable
-          jobs={jobs}
-          onEditJob={handleEditJob}
-          onDeleteJob={handleDeleteJob}
+        <Route
+          path="/jobs/:id"
+          element={<JobDetails jobs={jobs} />}
         />
-        <RemoteJobs/>
-      </main>
-    </div>
+        <Route
+path="/favorites"
+element={
+<Favorites
+   jobs={jobs}
+   favoriteIds={favoriteIds}
+   onToggleFavorite={handleToggleFavorite}
+ />
+}
+/>
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      
+    </BrowserRouter>
   );
 }
 
