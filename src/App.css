@@ -1269,23 +1269,49 @@ textarea:focus-visible {
   justify-content: center;
   align-items: center;
   gap: 12px;
-  margin-top: 10px;
-  padding-top: 0;
+  margin-top: 16px;
   flex-wrap: wrap;
 }
 
 .form-actions button {
-  min-height: 44px;
+  min-height: 46px;
   padding: 12px 24px;
-  border-radius: 8px;
+  border-radius: 9px;
   cursor: pointer;
   font-size: 14px;
   font-weight: 600;
+  transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+/* Save Opportunity */
+.form-actions .add-button {
+  background: #ffffff;
+  color: #2d52a4;
+  border: 1px solid #ffffff;
+}
+
+/* Cancel */
+.form-actions .cancel-button {
+  background: #dbe7ff;
+  color: #23458f;
+  border: 1px solid #dbe7ff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12);
+}
+
+.form-actions .cancel-button:hover {
+  background: #c5d7ff;
+  border-color: #c5d7ff;
+}
+
+.form-actions .add-button:hover {
+  background: #eaf0ff;
+}
+
+
+
 .form-actions button:focus-visible {
-  outline: 2px solid #2d52a4;
-  outline-offset: 2px;
+  outline: 2px solid #973030;
+  outline-offset: 3px;
 }
 
 @media (max-width: 560px) {
