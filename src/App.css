@@ -1402,3 +1402,74 @@ textarea:focus-visible {
     padding: 13px 16px;
   }
 }
+/* =========================================
+   JOB TABLE PAGINATION
+========================================= */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 24px 0;
+}
+
+.pagination-numbers {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pagination-button {
+  min-width: 40px;
+  min-height: 40px;
+  padding: 8px 13px;
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #2d52a4;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pagination-button:hover:not(:disabled) {
+  background: #eaf0ff;
+  border-color: #2d52a4;
+}
+
+.pagination-button.active {
+  background: #2d52a4;
+  border-color: #2d52a4;
+  color: #ffffff;
+}
+
+.pagination-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.pagination-button:focus-visible {
+  outline: 2px solid #2d52a4;
+  outline-offset: 3px;
+}
+
+/* Mobile pagination */
+@media (max-width: 560px) {
+  .pagination {
+    gap: 8px;
+    margin: 20px 0;
+  }
+
+  .pagination-button {
+    min-width: 38px;
+    min-height: 42px;
+    padding: 9px 11px;
+  }
+
+  .pagination-numbers {
+    gap: 4px;
+  }
+}
