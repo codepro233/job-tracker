@@ -293,6 +293,13 @@ The current test suite covers:
 - [x] Complete final production deployment verification.
 - [x] Complete final submission review.
 
+
+## Project Walkthrough
+
+Watch the 5-minute project walkthrough:
+
+[Watch Job Tracker Demo on Loom](https://www.loom.com/share/8951f707b48f4a3cb3aa30099d8979af)
+
 ## Future Improvements
 
 - User authentication.
