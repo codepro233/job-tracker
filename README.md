@@ -300,6 +300,14 @@ Watch the 5-minute project walkthrough:
 
 [Watch Job Tracker Demo on Loom](https://www.loom.com/share/8951f707b48f4a3cb3aa30099d8979af)
 
+
+## Accessibility Evidence
+
+The application was audited using Google Lighthouse.
+Final accessibility score: 96/100.
+
+The Week 1 baseline screenshot was not retained, so a numerical before-and-after comparison is unavailable.
+
 ## Future Improvements
 
 - User authentication.
